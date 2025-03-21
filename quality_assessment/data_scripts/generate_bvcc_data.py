@@ -2,6 +2,36 @@ import os
 import random
 import json
 
+"""
+This script processes the BVCC (Blizzard Voice Conversion Challenge) dataset to generate JSON files
+containing speech quality assessment annotations.
+
+Input Directory Structure:
+    /path/to/bvcc_dataset/
+    └── main/
+        └── DATA/
+            ├── sets/
+            │   ├── train_mos_list.txt
+            │   ├── val_mos_list.txt
+            │   └── test_mos_list.txt
+            └── wav/
+                └── [wav files]
+
+    The *_mos_list.txt files contain entries in format: "wavfile_name,score"
+
+Output Directory Structure:
+    /path/to/result_dir/
+    ├── bvcc_train_onlyscore.json
+    ├── bvcc_val_onlyscore.json
+    └── bvcc_test_onlyscore.json
+
+    Each JSON file contains an "annotation" list with entries:
+    {
+        "path": "/path/to/wav/file",
+        "task": "mos_evaluation_onlyscore_bvcc",
+        "text": "The score is X" (where X is the MOS score)
+    }
+"""
 
 subsets = ["train","val","test"]
 score_template = ["The score is {}.","The score of the quality of the speech sample is {}.", "{}."]

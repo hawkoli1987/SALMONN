@@ -1,3 +1,54 @@
+"""
+This script processes the NISQA (Non-Intrusive Speech Quality Assessment) dataset to generate JSON files
+containing speech quality assessment annotations with detailed quality descriptions and scores.
+
+Input Directory Structure:
+    /path/to/nisqa_dataset/
+    ├── TRAIN/
+    │   └── deg/
+    │       └── [degraded audio files]
+    ├── VAL/
+    │   └── deg/
+    │       └── [degraded audio files]
+    ├── TEST/
+    │   └── deg/
+    │       └── [degraded audio files]
+    └── NISQA_corpus_file.csv
+    
+    The NISQA_corpus_file.csv contains columns:
+    - db: dataset split (TRAIN/VAL/TEST)
+    - filename_deg: degraded audio filename
+    - col: coloration score
+    - dis: discontinuity score
+    - noi: noise score
+    - mos: mean opinion score
+
+Output Directory Structure:
+    /path/to/result_dir/
+    ├── nisqa_train_description.json  # Detailed quality descriptions
+    ├── nisqa_val_description.json
+    ├── nisqa_test_description.json
+    ├── nisqa_train_onlyscore.json   # Only MOS scores
+    ├── nisqa_val_onlyscore.json
+    └── nisqa_test_onlyscore.json
+
+    Description JSON files contain entries:
+    {
+        "path": "/path/to/audio/file",
+        "task": "mos_evaluation_description",
+        "text": "The speech sample is [coloration] and [discontinuity]. 
+                The background noise is [noise_level]. 
+                The overall quality is [quality_level]."
+    }
+
+    Score-only JSON files contain entries:
+    {
+        "path": "/path/to/audio/file",
+        "task": "mos_evaluation_onlyscore_nisqa",
+        "text": "The score is X" (where X is the MOS score)
+    }
+"""
+
 import os
 import random
 import json

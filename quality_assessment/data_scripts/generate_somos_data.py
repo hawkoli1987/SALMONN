@@ -1,3 +1,46 @@
+"""
+This script processes the SOMOS dataset to generate JSON files containing speech quality assessment 
+annotations for both AB comparison tests and direct MOS score evaluations.
+
+Input Directory Structure:
+    /path/to/somos_dataset/
+    ├── audios/
+    │   └── [wav files]
+    └── training_files/
+        └── split1/
+            └── clean/
+                ├── train_mos_list.txt
+                ├── valid_mos_list.txt
+                └── test_mos_list.txt
+
+    The *_mos_list.txt files contain entries in format: "wavfile_name,score"
+
+Output Directory Structure:
+    /path/to/result_dir/
+    ├── somos_train_ABtest.json    # AB comparison test annotations
+    ├── somos_valid_ABtest.json
+    ├── somos_test_ABtest.json
+    ├── somos_train_onlyscore.json # Direct MOS score annotations
+    ├── somos_valid_onlyscore.json
+    └── somos_test_onlyscore.json
+
+    AB test JSON files contain entries:
+    {
+        "task": "mos_ABtest",
+        "path": "/path/to/first/audio",
+        "expand_wav": ["/path/to/second/audio"],
+        "text": "[The first/second] is better",
+        "abs": float  # Absolute difference between MOS scores
+    }
+
+    Score-only JSON files contain entries:
+    {
+        "path": "/path/to/audio/file",
+        "task": "mos_evaluation_onlyscore_somos",
+        "text": "The score is X" (where X is the MOS score)
+    }
+"""
+
 import os
 import random
 import json
