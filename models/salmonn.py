@@ -252,7 +252,6 @@ class SALMONN(nn.Module):
                 # attention mask (B, T)
                 speech_atts = torch.ones(speech_embeds.size()[:-1], dtype=torch.long).to(speech_embeds.device)
 
-                print("0 - Shape of speech_embs (B, T, C): ", speech_embeds.shape) # [1, 1500, 2048]
                 # Default Case: window
                 if self.window_level_Qformer:
                     B, T, C = speech_embeds.shape
