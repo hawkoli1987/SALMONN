@@ -145,7 +145,14 @@ class Runner:
         header = "Train: data epoch: [{}]".format(epoch)
 
         # Main training loop
-        for i in metric_logger.log_every(range(self.iters_per_epoch), self.config.config.run.log_freq, header=header, logger=self.log_writter, start_step=epoch*self.iters_per_epoch):
+        for i in metric_logger.log_every(
+            range(self.iters_per_epoch), 
+            self.config.config.run.log_freq, 
+            header=header, 
+            logger=self.log_writter, 
+            start_step=epoch*self.iters_per_epoch,
+            use_wandb=self.use_wandb  # Pass the use_wandb flag
+        ):
             if i >= self.iters_per_epoch:
                 break
 
